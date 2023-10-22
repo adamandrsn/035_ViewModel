@@ -4,7 +4,6 @@
 )
 
 package com.example.form
-
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -16,7 +15,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -40,6 +38,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -57,7 +56,7 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    color = Color.LightGray
                 ) {
                     TampilanLayout()
                 }
@@ -220,6 +219,11 @@ fun TextHasil(namanya:String, telponya:String, jenisnya:String, alamatnya:String
 @Composable
 fun GreetingPreview() {
     FormTheme {
-        TampilanLayout()
+        Surface(
+            color = Color.LightGray,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            TampilanLayout()
+        }
     }
 }
