@@ -7,6 +7,7 @@ package com.example.form
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -40,7 +42,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -77,7 +82,7 @@ fun TampilanLayout(
         Column (
             verticalArrangement = Arrangement.spacedBy(10.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(20.dp)
+            modifier = Modifier.padding(30.dp, 0.dp, 30.dp, 0.dp)
         ){
             TampilanForm()
         }
@@ -94,6 +99,25 @@ fun TampilanForm(cobaViewModel: CobaViewModel = viewModel()){
     val dataclass : DataForm
     val uiState by cobaViewModel.uiState.collectAsState()
     dataclass = uiState
+
+    Row (
+        modifier = Modifier
+            .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Start
+    ){
+        Image(painter = painterResource(id = R.drawable.back),
+            contentDescription = "",
+            modifier = Modifier.size(50.dp),
+        )
+        Spacer(modifier = Modifier.padding(5.dp))
+        Text(
+            modifier = Modifier.padding(60.dp, 10.dp, 0.dp, 0.dp),
+            text = "Register",
+            fontSize = 25.sp,
+            fontFamily = FontFamily.Monospace,
+            fontWeight = FontWeight.Bold,
+        )
+    }
 
     OutlinedTextField(
         value = textNama,
