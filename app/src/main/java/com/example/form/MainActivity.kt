@@ -82,7 +82,6 @@ fun TampilanLayout(
     ) {
         Column (
             verticalArrangement = Arrangement.spacedBy(10.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.padding(30.dp, 0.dp, 30.dp, 0.dp)
         ){
             TampilanForm()
@@ -120,6 +119,12 @@ fun TampilanForm(cobaViewModel: CobaViewModel = viewModel()){
             fontWeight = FontWeight.Bold,
         )
     }
+    Text(
+        modifier = Modifier.padding(30.dp, 10.dp, 0.dp, 0.dp),
+        text = "Create Your Account",
+        fontSize = 30.sp,
+        fontWeight = FontWeight.Bold
+    )
     OutlinedTextField(
         value = textNama,
         singleLine = true,
@@ -151,11 +156,12 @@ fun TampilanForm(cobaViewModel: CobaViewModel = viewModel()){
             textEmail = it
         }
     )
-
+    Text(text = "Jenis Kelamin:")
     SelectJK(options = jenis.map { id -> context.resources.getString(id) },
         onSelectionChanged = {
             cobaViewModel.setJenisK(it)
         })
+    Text(text = "Status:")
     SelectStatus(options = status.map { id -> context.resources.getString(id) },
         onSelectionChanged = {
             cobaViewModel.setStatus(it)
@@ -180,7 +186,6 @@ fun TampilanForm(cobaViewModel: CobaViewModel = viewModel()){
             fontSize = 16.sp
         )
     }
-    Spacer(modifier = Modifier.height(100.dp))
     TextHasil(
         namanya = cobaViewModel.namaUSR,
         telponya =cobaViewModel.noTlp ,
