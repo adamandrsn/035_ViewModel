@@ -37,6 +37,7 @@ import com.example.form.ui.theme.FormTheme
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -178,7 +179,7 @@ fun TampilanForm(cobaViewModel: CobaViewModel = viewModel()){
     )
     Button(modifier = Modifier.fillMaxWidth(),
         onClick = {
-            cobaViewModel.BacaData(textNama,textTlp,textAlamat,dataclass.sex,textEmail)
+            cobaViewModel.BacaData(textNama,textTlp,textAlamat,dataclass.sex,textEmail,dataclass.status)
         }
     ) {
         Text(
@@ -269,7 +270,7 @@ fun TextHasil(namanya:String, telponya:String, jenisnya:String, alamatnya:String
         ),
         modifier = Modifier.fillMaxWidth()
     ) {
-        Text(text = "Jenis Kelamin : " + jenisnya,
+        Text(text = "Jenis Kelamin : " + alamatnya,
             modifier = Modifier
                 .padding(horizontal = 10.dp, vertical = 5.dp)
         )
@@ -277,7 +278,7 @@ fun TextHasil(namanya:String, telponya:String, jenisnya:String, alamatnya:String
             modifier = Modifier
                 .padding(horizontal = 10.dp, vertical = 5.dp)
         )
-        Text(text = "Alamat : " + alamatnya,
+        Text(text = "Alamat : " + jenisnya,
             modifier = Modifier
                 .padding(horizontal = 10.dp, vertical = 5.dp)
         )
