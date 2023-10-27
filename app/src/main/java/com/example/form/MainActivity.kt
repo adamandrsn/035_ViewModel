@@ -51,6 +51,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.form.Data.DataForm
 import com.example.form.Data.DataSource.jenis
+import com.example.form.Data.DataSource.status
 
 
 class MainActivity : ComponentActivity() {
@@ -95,6 +96,7 @@ fun TampilanForm(cobaViewModel: CobaViewModel = viewModel()){
     var textNama by remember{ mutableStateOf("") }
     var textTlp by remember{ mutableStateOf("") }
     var textAlamat by remember { mutableStateOf("") }
+    var textEmail by remember { mutableStateOf("") }
     val context = LocalContext.current
     val dataclass : DataForm
     val uiState by cobaViewModel.uiState.collectAsState()
@@ -118,13 +120,12 @@ fun TampilanForm(cobaViewModel: CobaViewModel = viewModel()){
             fontWeight = FontWeight.Bold,
         )
     }
-
     OutlinedTextField(
         value = textNama,
         singleLine = true,
         shape = MaterialTheme.shapes.large,
         modifier = Modifier.fillMaxWidth(),
-        label = { Text(text = "Nama Lengkap")},
+        label = { Text(text = "Username")},
         onValueChange ={
             textNama = it
         }
@@ -141,6 +142,25 @@ fun TampilanForm(cobaViewModel: CobaViewModel = viewModel()){
         }
     )
     OutlinedTextField(
+        value = textEmail,
+        singleLine = true,
+        shape = MaterialTheme.shapes.large,
+        modifier = Modifier.fillMaxWidth(),
+        label = { Text(text = "Email") },
+        onValueChange = {
+            textEmail = it
+        }
+    )
+
+    SelectJK(options = jenis.map { id -> context.resources.getString(id) },
+        onSelectionChanged = {
+            cobaViewModel.setJenisK(it)
+        })
+    SelectStatus(options = status.map { id -> context.resources.getString(id) },
+        onSelectionChanged = {
+            cobaViewModel.setStatus(it)
+        })
+    OutlinedTextField(
         value = textAlamat,
         singleLine = true,
         shape = MaterialTheme.shapes.large,
@@ -150,17 +170,9 @@ fun TampilanForm(cobaViewModel: CobaViewModel = viewModel()){
             textAlamat = it
         }
     )
-
-
-
-    SelectJK(options = jenis.map { id -> context.resources.getString(id) },
-        onSelectionChanged = {
-            cobaViewModel.setJenisK(it)
-        })
-
     Button(modifier = Modifier.fillMaxWidth(),
         onClick = {
-            cobaViewModel.BacaData(textNama,textTlp,textAlamat,dataclass.sex)
+            cobaViewModel.BacaData(textNama,textTlp,textAlamat,dataclass.sex,textEmail)
         }
     ) {
         Text(
@@ -174,6 +186,8 @@ fun TampilanForm(cobaViewModel: CobaViewModel = viewModel()){
         telponya =cobaViewModel.noTlp ,
         jenisnya = cobaViewModel.jenisKl,
         alamatnya =cobaViewModel.textAlamat,
+        emailnya =cobaViewModel.textEmail,
+        statusnya =cobaViewModel.jenisStatus
     )
 }
 
@@ -187,7 +201,7 @@ fun SelectJK(
 ) {
     var selectedValue by remember { mutableStateOf(" ") }
 
-    Column(modifier = Modifier.padding(16.dp)){
+    Row(modifier = Modifier.padding(16.dp)){
         options.forEach{ item ->
             Row(
                 modifier = Modifier.selectable(
@@ -211,18 +225,50 @@ fun SelectJK(
 }
 
 @Composable
-fun TextHasil(namanya:String, telponya:String, jenisnya:String, alamatnya:String){
+fun SelectStatus(
+    options: List<String>,
+    onSelectionChanged: (String) -> Unit = {}
+
+) {
+    var selectedValue by remember { mutableStateOf(" ") }
+
+    Row(modifier = Modifier.padding(16.dp)){
+        options.forEach{ item ->
+            Row(
+                modifier = Modifier.selectable(
+                    selected = selectedValue ==item,
+                    onClick = {
+                        selectedValue = item
+                        onSelectionChanged(item)
+                    }
+                ),
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                RadioButton(selected = selectedValue == item, onClick = {
+                    selectedValue = item
+                    onSelectionChanged(item)
+                }
+                )
+                Text(item)
+            }
+        }
+    }
+}
+
+
+@Composable
+fun TextHasil(namanya:String, telponya:String, jenisnya:String, alamatnya:String, statusnya:String, emailnya:String){
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
         ),
         modifier = Modifier.fillMaxWidth()
     ) {
-        Text(text = "Nama : " + namanya,
+        Text(text = "Jenis Kelamin : " + jenisnya,
             modifier = Modifier
-                .padding(horizontal = 10.dp, vertical = 4.dp)
+                .padding(horizontal = 10.dp, vertical = 5.dp)
         )
-        Text(text = "Telepon : " + telponya,
+        Text(text = "Status Menikah : " + statusnya,
             modifier = Modifier
                 .padding(horizontal = 10.dp, vertical = 5.dp)
         )
@@ -230,9 +276,9 @@ fun TextHasil(namanya:String, telponya:String, jenisnya:String, alamatnya:String
             modifier = Modifier
                 .padding(horizontal = 10.dp, vertical = 5.dp)
         )
-        Text(text = "Jenis Kelamin : " + jenisnya,
+        Text(text = "Email : " + emailnya,
             modifier = Modifier
-                .padding(horizontal = 10.dp, vertical = 5.dp)
+                .padding(horizontal = 10.dp, vertical = 4.dp)
         )
     }
 }
