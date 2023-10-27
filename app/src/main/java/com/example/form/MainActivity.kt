@@ -120,6 +120,7 @@ fun TampilanForm(cobaViewModel: CobaViewModel = viewModel()){
             fontWeight = FontWeight.Bold,
         )
     }
+    Divider()
     Text(
         modifier = Modifier.padding(30.dp, 10.dp, 0.dp, 0.dp),
         text = "Create Your Account",
